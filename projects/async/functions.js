@@ -8,7 +8,11 @@
  Пример:
    delayPromise(3) // вернет promise, который будет разрешен через 3 секунды
  */
-function delayPromise(seconds) {}
+function delayPromise(seconds = 1) {
+  return new Promise((resolved) => {
+    setTimeout(() => resolved(), seconds * 1000);
+  });
+}
 
 /*
  Задание 2:
@@ -23,6 +27,12 @@ function delayPromise(seconds) {}
  Пример:
    loadAndSortTowns().then(towns => console.log(towns)) // должна вывести в консоль отсортированный массив городов
  */
-function loadAndSortTowns() {}
+function loadAndSortTowns() {
+  return new Promise((resolved) => {
+    fetch('https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json')
+      .then((response) => response.json())
+      .then((towns) => resolved(towns.sort((a, b) => a.name.localeCompare(b.name))));
+  });
+}
 
 export { delayPromise, loadAndSortTowns };
